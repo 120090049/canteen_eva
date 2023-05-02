@@ -29,7 +29,8 @@ if __name__ == "__main__":
             stall_index_dict[stall] = row_index-1
             stall_canteen_dict[stall] = canteen
     
+    print(stall_index_dict, stall_canteen_dict)
 
     # list_A = bayesian_ranking()
-    list_B = complaint_analysis(stall_index_dict, stall_canteen_dict)
-    print(list_B)
+    # list_B = complaint_analysis(stall_index_dict, stall_canteen_dict)
+    # print(list_B)
