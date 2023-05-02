@@ -32,7 +32,8 @@ if __name__ == "__main__":
     # print(stall_dict)
     # stall_index_dict    {stall_name: index}
     # stall_canteen_dict  {stall_name: canteen}
-    
-    list_A = bayesian_ranking()
-    list_B = complaint_analysis(first_row)
+    print(stall_index_dict)
+    print(stall_canteen_dict)
+    # list_A = bayesian_ranking()
+    # list_B = complaint_analysis(first_row)
     # print(final_list)

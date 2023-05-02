@@ -22,10 +22,9 @@ def complaint_analysis():
             continue
         else:
             # 预测得分
-        
+            pass
 
-    
-    return output_list
+    return 
 
 if __name__ == "__main__":
     final_list = complaint_analysis()
