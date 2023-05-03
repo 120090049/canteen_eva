@@ -7,8 +7,19 @@ parent_dir = os.path.dirname(current_dir)
 
 file_path = os.path.join(parent_dir, 'data', 'complaint_score.xlsx')
 
-def complaint_analysis(stall_index_dict, stall_canteen_dict):
+def get_keys(my_dict, value):
+    keys = []
+    for k, v in my_dict.items():
+        if v == value:
+            keys.append(k)
+    if len(keys) == 0:
+        return None
+    return keys
 
+
+
+def complaint_analysis(stall_dict, canteen_dict):
+    print(stall_dict)
     table = openpyxl.load_workbook(file_path).active
     stall_score_list = [5] * 45
     first_row = True
@@ -21,37 +32,26 @@ def complaint_analysis(stall_index_dict, stall_canteen_dict):
             stall = table.cell(row_index, 2).value
             score = table.cell(row_index, 5).value
             
-            stall_index = stall_index_dict(stall)
-            break
+            if (stall == "未知"): # all stalls in a certain canteens should be deducted
+                indexs = get_keys(canteen_dict, canteen)
+                for index in indexs:
+                    stall_score_list[index-1] -= (1-score)/len(indexs)
+                    
+            else:   # deduct a certain stall
+                intersection = (set(get_keys(stall_dict, stall)) & set(get_keys(canteen_dict, canteen)))
+                index = intersection.pop()
+                stall_score_list[index-1] -= (1-score)
 
-    return stall_score_list
-
-if __name__ == "__main__":
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    parent_dir = os.path.dirname(current_dir)
-    file_path = os.path.join(parent_dir, 'data', 'stall_rating.xlsx')
-
-    # 读取Excel文件
-    table = openpyxl.load_workbook(file_path)
-    table_sheet = table.active
-
-    first_row = True
+    # 对 stall_score_list 的索引进行排序，排序依据是列表中对应索引位置的元素值
+    sorted_indexes = sorted(range(len(stall_score_list)), key=stall_score_list.__getitem__, reverse=True)
+    sorted_indexes = [x + 1 for x in sorted_indexes]
+    # [2, 1, 3]
     
-    stall_index_dict = {} # {stall_name: index}
-    stall_canteen_dict = {} #  {stall_name: canteen}
-    for row_index in range(1,table_sheet.max_row+1):
-        # 读取第一列和第二列的值
-        canteen = table_sheet.cell(row_index, 1).value
-        stall = table_sheet.cell(row_index, 2).value
-        score = table_sheet.cell(row_index, 5).value
-
-        if (first_row):
-            first_row = False
-            continue
-        else:
-            stall_index_dict[stall] = row_index-1
-            stall_canteen_dict[stall] = canteen
-            
-            
-    final_list = complaint_analysis(stall_index_dict, stall_canteen_dict)
-    print(final_list)
+    index_score = [0 for i in range(len(sorted_indexes))]
+    for i in range(len(sorted_indexes)):
+        score = len(sorted_indexes) - i -1
+        index_score[sorted_indexes[i]-1] = score
+    print(sorted_indexes)
+    print(index_score)
+    
+    return index_score

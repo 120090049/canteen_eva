@@ -41,11 +41,18 @@ def bayesian_ranking():
     for i in range(len(bayasian2)):
         final_list.append([bayasian2[i][0], bayasian2[i][1], i+1])
 
-    output_list = []
+    sorted_indexes = []
     for i in range(len(final_list)):
-        output_list.append(final_list[i][0])
+        sorted_indexes.append(final_list[i][0])
     
-    return output_list
+    index_score = [0 for i in range(len(sorted_indexes))]
+    for i in range(len(sorted_indexes)):
+        score = len(sorted_indexes) - i -1
+        index_score[sorted_indexes[i]-1] = score
+    print(sorted_indexes)
+    
+    print(index_score)
+    return index_score
 
 if __name__ == "__main__":
     final_list = bayesian_ranking()
