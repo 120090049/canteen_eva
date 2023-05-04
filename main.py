@@ -47,6 +47,7 @@ if __name__ == "__main__":
     list_A = bayesian_ranking()
     list_B = complaint_analysis(stall_dict, canteen_dict)
     list_C = geo_score(stall_dict, canteen_dict)
+    list_C = [32.5, 32.5, 32.5, 32.5, 32.5, 32.5, 40, 40, 40, 40, 40, 40, 40, 40, 40, 27.5, 27.5, 27.5, 27.5, 21, 21, 21, 21, 21, 21, 21, 21, 21, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
     list_D = cuisine_score()
     list_E = revenue_rating()
     print(list_A)

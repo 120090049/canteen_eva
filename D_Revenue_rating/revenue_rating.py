@@ -1,11 +1,17 @@
 import openpyxl
 import numpy as np
 from numpy.linalg import *
+import os
 
 def revenue_rating():
 
     # Define variable to load the dataframe
-    dataframe = openpyxl.load_workbook("readTest.xlsx")
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # 构造文件的相对路径
+    file_path = os.path.join(current_dir, "readTest.xlsx")
+    
+    dataframe = openpyxl.load_workbook(file_path)
 
     # Define variable to read sheet
     dataframe1 = dataframe.active
@@ -77,7 +83,12 @@ def revenue_rating():
     # CANNOT WRITE into this sheet, so I copy it into Excel manually
 
     # read another sheet to print out the rank list
-    wb = openpyxl.load_workbook('Stall Revenue.xlsx')
+    # Define variable to load the dataframe
+
+    # 构造文件的相对路径
+    file_path = os.path.join(current_dir, 'Stall Revenue.xlsx')
+    
+    wb = openpyxl.load_workbook(file_path)
     ws = wb["Netflix(v1)"]
 
     rank = ws['M']

@@ -6,10 +6,10 @@ import os
 
 
 def borda(remove_percent, lists):
+    [bys, r, nlp, page_sim, page_pos] = lists
     if ((len(bys) != len(r)) or (len(r) != len(nlp)) or (len(nlp) != len(page_sim)) or (len(page_sim) != len(bys))):
         raise ValueError("The length of the lists does not match")
 
-    [bys, r, nlp, page_sim, page_pos] = lists
     remove_num = int(remove_percent*len(bys))
 
 
@@ -61,7 +61,7 @@ def borda(remove_percent, lists):
                     # sort the final weight，转成list
                     pairs = [[k, v] for k, v in final_pair.items()]
                     # 从低到高，排序每一对
-                    pairs = sorted(pairs, key=(lambda x: x[1]), reverse=True)
+                    pairs = sorted(pairs, key=(lambda x: x[1]))
 
                     # 计算cost
                     for t in range(remove_num):

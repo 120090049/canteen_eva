@@ -2,12 +2,18 @@ import openpyxl
 import numpy as np
 # from numpy.linalg import *
 from numpy.linalg import eig
+import os
 
 
 # read the excel and form a table
 # Define variable to load the dataframe
 def cuisine_score():
-    dataframe = openpyxl.load_workbook("matrixH.xlsx")
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # 构造文件的相对路径
+    file_path = os.path.join(current_dir, "matrixH.xlsx")
+    
+    dataframe = openpyxl.load_workbook(file_path)
 
     # Define variable to read sheet
     dataframe1 = dataframe.active
