@@ -88,10 +88,15 @@ def revenue_rating():
     # print(rank_list)
 
     new_list = np.argsort(rank_list).tolist()
-    new_list = new_list[:-1]
+    sorted_indexes = new_list[:-1]
     # print(new_list)
-
-    return new_list
+    
+    index_score = [0 for i in range(len(sorted_indexes))]
+    for i in range(len(sorted_indexes)):
+        score = len(sorted_indexes) - i -1
+        index_score[sorted_indexes[i]-1] = score
+    
+    return index_score
 
 if __name__ == "__main__":
     revenue_list = revenue_rating()
