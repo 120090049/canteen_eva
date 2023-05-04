@@ -19,7 +19,6 @@ def get_keys(my_dict, value):
 
 
 def complaint_analysis(stall_dict, canteen_dict):
-    print(stall_dict)
     table = openpyxl.load_workbook(file_path).active
     stall_score_list = [5] * 45
     first_row = True
@@ -51,7 +50,7 @@ def complaint_analysis(stall_dict, canteen_dict):
     for i in range(len(sorted_indexes)):
         score = len(sorted_indexes) - i -1
         index_score[sorted_indexes[i]-1] = score
-    print(sorted_indexes)
-    print(index_score)
+    # print(sorted_indexes)
+    # print(index_score)
     
     return index_score

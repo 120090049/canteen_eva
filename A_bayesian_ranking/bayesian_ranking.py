@@ -49,9 +49,7 @@ def bayesian_ranking():
     for i in range(len(sorted_indexes)):
         score = len(sorted_indexes) - i -1
         index_score[sorted_indexes[i]-1] = score
-    print(sorted_indexes)
     
-    print(index_score)
     return index_score
 
 if __name__ == "__main__":
