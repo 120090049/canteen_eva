@@ -71,4 +71,4 @@ def bayesian_ranking():
 if __name__ == "__main__":
     
     final_list = bayesian_ranking()
-    print(ori2borda( final_list) )
+    # print(ori2borda( final_list) )

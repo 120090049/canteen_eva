@@ -104,7 +104,6 @@ def cuisine_score():
     for i in range(len(pi)):
         final_result.append(1 / pi[i])
         # print(i, "hhh", 1/pi[i])
-    print(final_result)
 
     # return new_list
     return final_result
