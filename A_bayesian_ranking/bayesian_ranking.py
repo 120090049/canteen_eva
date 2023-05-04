@@ -1,6 +1,37 @@
 import pandas as pd
 import os
 
+
+def ori2borda(original_score):
+    sorted_score = sorted(original_score)  # 按升序排序 [2, 3, 3, 4, 5, 6, 6, 6]
+    result = [0 for i in range(len(original_score))]
+
+    for i in range(len(original_score)):
+        result[i] = sorted_score.index(original_score[i]) 
+    # print(result) # [4, 0, 1, 1, 3, 5, 5, 5]  8个
+    count_dict = {}
+    for num in result:
+        if num in count_dict:
+            count_dict[num] += 1
+        else:
+            count_dict[num] = 1
+
+    index_repeated = [key for key, value in count_dict.items() if value != 1] 
+
+    new_dict = {} # {1: 2, 5: 3} ==> {1:1.5, 5:6}
+    for i in index_repeated:
+        # 1 有 2 个 == i 有 times 个   1+2+3
+        times = count_dict[i] 
+        value = i + 0.5*(times-1)
+        new_dict[i] = value        
+    # number_index_repeated = 
+
+    for i in range(len(result)):
+        if result[i] in new_dict:
+            result[i] = new_dict[result[i]]
+            
+    return result
+
 def bayesian_ranking():
     # 获取当前文件所在目录的绝对路径
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -33,25 +64,11 @@ def bayesian_ranking():
     bayesian_rank_list = []
     for i in range(len(total_list)):
         br = (NR + number[i] * grade[i]) / (N + number[i])
-        bayesian_rank_list.append([i+1, name[i], br])
-
-    bayasian2 = sorted(bayesian_rank_list, key=(lambda x: x[2]), reverse=True)
-
-    final_list = []
-    for i in range(len(bayasian2)):
-        final_list.append([bayasian2[i][0], bayasian2[i][1], i+1])
-
-    sorted_indexes = []
-    for i in range(len(final_list)):
-        sorted_indexes.append(final_list[i][0])
+        bayesian_rank_list.append(br)
     
-    index_score = [0 for i in range(len(sorted_indexes))]
-    for i in range(len(sorted_indexes)):
-        score = len(sorted_indexes) - i -1
-        index_score[sorted_indexes[i]-1] = score
-    
-    return index_score
+    return bayesian_rank_list
 
 if __name__ == "__main__":
+    
     final_list = bayesian_ranking()
-    print(final_list)
+    print(ori2borda( final_list) )

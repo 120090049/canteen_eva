@@ -93,21 +93,21 @@ def revenue_rating():
 
     rank = ws['M']
     rank_list = []
-    for x in range(0,len(rank)): 
+    for x in range(1,len(rank)): 
         # print(rank[x].value) 
         rank_list.append(rank[x].value)
-    # print(rank_list)
+    
 
-    new_list = np.argsort(rank_list).tolist()
-    sorted_indexes = new_list[:-1]
-    # print(new_list)
+    # new_list = np.argsort(rank_list).tolist()
+    # sorted_indexes = new_list[:-1]
+    # # print(new_list)
     
-    index_score = [0 for i in range(len(sorted_indexes))]
-    for i in range(len(sorted_indexes)):
-        score = len(sorted_indexes) - i -1
-        index_score[sorted_indexes[i]-1] = score
+    # index_score = [0 for i in range(len(sorted_indexes))]
+    # for i in range(len(sorted_indexes)):
+    #     score = len(sorted_indexes) - i -1
+    #     index_score[sorted_indexes[i]-1] = score
     
-    return index_score
+    return rank_list
 
 if __name__ == "__main__":
     revenue_list = revenue_rating()

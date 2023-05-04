@@ -9,6 +9,36 @@ import os
 import openpyxl
 import numpy as np
 
+def ori2borda(original_score):
+    sorted_score = sorted(original_score)  # 按升序排序 [2, 3, 3, 4, 5, 6, 6, 6]
+    result = [0 for i in range(len(original_score))]
+
+    for i in range(len(original_score)):
+        result[i] = sorted_score.index(original_score[i]) 
+    # print(result) # [4, 0, 1, 1, 3, 5, 5, 5]  8个
+    count_dict = {}
+    for num in result:
+        if num in count_dict:
+            count_dict[num] += 1
+        else:
+            count_dict[num] = 1
+
+    index_repeated = [key for key, value in count_dict.items() if value != 1] 
+
+    new_dict = {} # {1: 2, 5: 3} ==> {1:1.5, 5:6}
+    for i in index_repeated:
+        # 1 有 2 个 == i 有 times 个   1+2+3
+        times = count_dict[i] 
+        value = i + 0.5*(times-1)
+        new_dict[i] = value        
+    # number_index_repeated = 
+
+    for i in range(len(result)):
+        if result[i] in new_dict:
+            result[i] = new_dict[result[i]]
+            
+    return result
+
 if __name__ == "__main__":
     remove_percent = 0.1
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -47,7 +77,6 @@ if __name__ == "__main__":
     list_A = bayesian_ranking()
     list_B = complaint_analysis(stall_dict, canteen_dict)
     list_C = geo_score(stall_dict, canteen_dict)
-    list_C = [32.5, 32.5, 32.5, 32.5, 32.5, 32.5, 40, 40, 40, 40, 40, 40, 40, 40, 40, 27.5, 27.5, 27.5, 27.5, 21, 21, 21, 21, 21, 21, 21, 21, 21, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
     list_D = cuisine_score()
     list_E = revenue_rating()
     print(list_A)
@@ -56,7 +85,7 @@ if __name__ == "__main__":
     print(list_D)
     print(list_E)
   
-    lists = [list_A, list_B, list_C, list_D, list_E]
+    lists = [ori2borda(list_A), ori2borda(list_B), ori2borda(list_C), ori2borda(list_D), ori2borda(list_E)]
     final_result = borda(remove_percent, lists)
     
     print(final_result)

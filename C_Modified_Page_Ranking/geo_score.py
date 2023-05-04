@@ -33,19 +33,20 @@ def geo_score(dict_stall, dict_canteen):
         list_score = [''] * length
         for key, val in dict_canteen.items():
             list_score[key-1] = dict_score[val]
-        rank_list4 = list()
-        count = 0
-        while count < length:
+        # rank_list4 = list()
+        # count = 0
+        # while count < length:
             
-            rank_list4.append(list_score.index(max(list_score))+1)
-            list_score[list_score.index(max(list_score))] = 0
-            count +=1
+        #     rank_list4.append(list_score.index(max(list_score))+1)
+        #     list_score[list_score.index(max(list_score))] = 0
+        #     count +=1
         
 
-        return rank_list4
+        # return rank_list4
+        return list_score
     else:
         print('data error')
         return
 
-
-# print(geo_score(dict1, dict2))
+# print(1)
+print(geo_score(dict1, dict2))

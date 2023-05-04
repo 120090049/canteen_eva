@@ -17,7 +17,6 @@ def get_keys(my_dict, value):
     return keys
 
 
-
 def complaint_analysis(stall_dict, canteen_dict):
     table = openpyxl.load_workbook(file_path).active
     stall_score_list = [5] * 45
@@ -40,17 +39,5 @@ def complaint_analysis(stall_dict, canteen_dict):
                 intersection = (set(get_keys(stall_dict, stall)) & set(get_keys(canteen_dict, canteen)))
                 index = intersection.pop()
                 stall_score_list[index-1] -= (1-score)
-
-    # 对 stall_score_list 的索引进行排序，排序依据是列表中对应索引位置的元素值
-    sorted_indexes = sorted(range(len(stall_score_list)), key=stall_score_list.__getitem__, reverse=True)
-    sorted_indexes = [x + 1 for x in sorted_indexes]
-    # [2, 1, 3]
-    
-    index_score = [0 for i in range(len(sorted_indexes))]
-    for i in range(len(sorted_indexes)):
-        score = len(sorted_indexes) - i -1
-        index_score[sorted_indexes[i]-1] = score
-    # print(sorted_indexes)
-    # print(index_score)
-    
-    return index_score
+    return stall_score_list
+ 
