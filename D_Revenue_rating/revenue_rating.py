@@ -111,4 +111,4 @@ def revenue_rating():
 
 if __name__ == "__main__":
     revenue_list = revenue_rating()
-    print(revenue_list)
+    # print(revenue_list)

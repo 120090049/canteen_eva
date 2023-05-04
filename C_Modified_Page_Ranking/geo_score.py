@@ -49,4 +49,4 @@ def geo_score(dict_stall, dict_canteen):
         return
 
 # print(1)
-print(geo_score(dict1, dict2))
+# print(geo_score(dict1, dict2))
