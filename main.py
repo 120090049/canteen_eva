@@ -12,7 +12,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 
 remove_percent = 0.1
-calculate = False
+calculate = True
 evalute = False
 
 
