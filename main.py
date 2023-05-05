@@ -12,8 +12,9 @@ from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 
 remove_percent = 0.1
-calculate = True
-evalute = False
+calculate = False
+evalute = True
+
 
 
 def ori2borda(original_score):
@@ -50,16 +51,18 @@ def ori2borda(original_score):
 if __name__ == "__main__":
     current_dir = os.path.dirname(os.path.abspath(__file__))
     file_path = os.path.join(current_dir, 'data', 'stall_canteen_campus.xlsx')
+
+    # 读取Excel文件
     table = openpyxl.load_workbook(file_path)
     table_sheet = table.active
 
-    # rank1-5
-    
     first_row = True
+
     stall_dict = {}  # {stall_name: index}
     canteen_dict = {}  # {stall_name: canteen}
     campus_dict = {}
     for row_index in range(1, table_sheet.max_row+1):
+        # 读取第一列和第二列的值
         canteen = table_sheet.cell(row_index, 1).value
         stall = table_sheet.cell(row_index, 2).value
         campus = table_sheet.cell(row_index, 3).value
@@ -77,29 +80,29 @@ if __name__ == "__main__":
     list_C = geo_score(stall_dict, canteen_dict)
     list_D = cuisine_score()
     list_E = revenue_rating()
-    
-    # borda count
-
-    lists = [ori2borda(list_A), ori2borda(list_B), ori2borda(list_C), ori2borda(list_D), ori2borda(list_E)]
+    # print(list_A)
+    # print(list_B)
+    # print(list_C)
+    # print(list_D)
+    # print(list_E)
+    lists = [ori2borda(list_A), ori2borda(list_B), ori2borda(
+        list_C), ori2borda(list_D), ori2borda(list_E)]
     if (calculate):
-        result = borda(remove_percent, lists)
-        [w1, w2, w3, w4, w5] = result[0], result[1], result[2], result[3], result[4]
+        final_result = borda(remove_percent, lists)
+        [w1, w2, w3, w4, w5] = final_result[0], final_result[1], final_result[2], final_result[3], final_result[4]
     else:
-        result = [9, 57, 3, 16, 15, 65.923273657289, [30, 29, 44, 31]]
+        result = [49, 15, 9, 23, 4, 40.36144578313253, [30, 18, 29, 5]]
         w1, w2, w3, w4, w5 = result[0], result[1], result[2], result[3], result[4]
-    print("w1 = %d, w2 = %d, w3 = %d, w4 = %d, w5 = %d and corresponding cost is %d" % (w1, w2, w3, w4, w5, result[5]))
-    print("The stall need to be removed:")
-    for index in result[6]:
-        for stall_index, stall_name in stall_dict.items():
-            if int(stall_index) == index:
-                # found the stall with the desired index
-                print(str(index) + ": " + stall_name)
-                break
-    
-            
-    remove_num = int(len(canteen_dict) * remove_percent)
-    # print(remove_num)
-    
+        print("w1 = %d, w2 = %d, w3 = %d, w4 = %d, w5 = %d and corresponding cost is %d" % (
+            w1, w2, w3, w4, w5, result[5]))
+        print()
+        print("The stall need to be removed:")
+        for index in result[6]:
+            for stall_index, stall_name in stall_dict.items():
+                if int(stall_index) == index:
+                    # found the stall with the desired index
+                    print(str(index) + ": " + stall_name)
+                    break
     if (evalute):
         # Create the data for the plot
         sum = 100 - w4 - w5
@@ -128,7 +131,7 @@ if __name__ == "__main__":
         
         # Plot the highest point as a red dot
         _, out = infer(lists, [w1, w2, w3, w4, w5], remove_num)
-        ax.scatter(w1, w2, out, color='red', s=20)
+        ax.scatter(w1+2, w2-1, out, color='red', s=20)
 
         # Add a text label for the highest point
         ax.text(w1, w2, out, f'({w1:.1f}, {w2:.1f}, {out:.1f})', 

@@ -23,7 +23,7 @@ def infer(lists, para, remove_num):
     # print(rank)
 
     # evaluation
-    file_path = os.path.join('data', 'stall_like_dislike.xlsx')
+    file_path = os.path.join('data', 'stall_want_to_remove.xlsx')
     df = pd.read_excel(file_path)
     rating_list = []
     like_list = []
@@ -81,7 +81,7 @@ def borda(remove_percent, lists):
     final_pair = {i: 0 for i in range(1, len(bys)+1)}
 
     # 读取Excel文件
-    file_path = os.path.join('data', 'stall_like_dislike.xlsx')
+    file_path = os.path.join('data', 'stall_want_to_remove.xlsx')
     df = pd.read_excel(file_path)
     rating_list = []
     like_list = []
@@ -153,6 +153,7 @@ def borda(remove_percent, lists):
 
     all_results = sorted(
         all_results, key=(lambda x: x[5]), reverse=True)
+    # 输出最后一个，evaluation最大的结果的比重
     print(all_results[0])
     return all_results[0]
 

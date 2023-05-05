@@ -16,7 +16,7 @@ def infer(lists, para, remove_num):
         final_pair[m] += w4 * list4[m-1]
         final_pair[m] += w5 * list5[m-1]
     pairs = [[k, v] for k, v in final_pair.items()]
-    pairs = sorted(pairs, key=(lambda x: x[1]))  # 分数低在前面
+    pairs = sorted(pairs, key=(lambda x: x[1]))
     rank = []
     for i in range(len(pairs)):
         rank.append(pairs[i][0])
@@ -25,45 +25,38 @@ def infer(lists, para, remove_num):
     # evaluation
     file_path = os.path.join('data', 'stall_like_dislike.xlsx')
     df = pd.read_excel(file_path)
-    rating_list = []
-    like_list = []
+    rating_list_like = []
+    rating_list_dislike = []
+
     # 提取数据,form a dictionary
-    number = df.iloc[:, 2].tolist()
-    index = [i for i in range(1, len(list1)+1)]
+    number_like = df.iloc[:, 2].tolist()
+    number_dislike = df.iloc[:, 3].tolist()
+    index = [i for i in range(1, len(bys)+1)]
     for i in range(len(index)):
-        rating_list.append([index[i], number[i]])
-    rating_list = sorted(rating_list, key=(lambda x: x[1]), reverse=True)
+        rating_list_like.append([index[i], number_like[i]])
+        rating_list_dislike.append([index[i], number_dislike[i]])
+    rating_list_like = sorted(rating_list_like, key=(lambda x: x[1]), reverse=True)
+    rating_list_dislike = sorted(rating_list_dislike, key=(lambda x: x[1]), reverse=True)
 
-    rating_dict = {}
+    stall_want_to_rt = {}
+    stall_want_to_rm = {}
     for i in range(remove_num):
-        rating_dict[rating_list[i][0]] = rating_list[i][1]
-
-    # 最喜欢的dic
-    number2 = df.iloc[:, 3].tolist()
-    index2 = [i for i in range(1, len(list1)+1)]
-    for i in range(len(index)):
-        like_list.append([index2[i], number2[i]])
-    like_list = sorted(like_list, key=(lambda x: x[1]), reverse=True)
-
-    like_dict = {}
-    for i in range(remove_num):
-        like_dict[like_list[i][0]] = like_list[i][1]
-
-    # print(like_dict)
+        stall_want_to_rm[rating_list_dislike[i][0]] = rating_list_dislike[i][1]
+    for i in range(4*remove_num):
+        stall_want_to_rt[rating_list_like[i][0]] = rating_list_like[i][1]
 
     removes = []
     evaluation = 0
 
     # 计算cost
     for t in range(remove_num):
-        # mark the removed stalls
-        removes.append(pairs[t][0])
-        # calculate the cost
-        if pairs[t][0] in rating_dict:
-            # print('yes')
-            evaluation += rating_dict[pairs[t][0]]
-        if pairs[t][0] in like_dict:
-            evaluation -= like_dict[pairs[t][0]]
+                        # mark the removed stalls
+                        removes.append(pairs[t][0])
+                        # calculate the cost
+                        if pairs[t][0] in stall_want_to_rm:
+                            evaluation -= 1
+                        if pairs[t][0] in stall_want_to_rt:
+                            evaluation += 2
 
     # print(evaluation)
     return rank, evaluation
@@ -83,31 +76,28 @@ def borda(remove_percent, lists):
     # 读取Excel文件
     file_path = os.path.join('data', 'stall_like_dislike.xlsx')
     df = pd.read_excel(file_path)
-    rating_list = []
-    like_list = []
+    rating_list_like = []
+    rating_list_dislike = []
 
     # 提取数据,form a dictionary
-    number = df.iloc[:, 2].tolist()
+    number_like = df.iloc[:, 2].tolist()
+    number_dislike = df.iloc[:, 3].tolist()
     index = [i for i in range(1, len(bys)+1)]
     for i in range(len(index)):
-        rating_list.append([index[i], number[i]])
-    rating_list = sorted(rating_list, key=(lambda x: x[1]), reverse=True)
+        rating_list_like.append([index[i], number_like[i]])
+        rating_list_dislike.append([index[i], number_dislike[i]])
+    rating_list_like = sorted(rating_list_like, key=(lambda x: x[1]), reverse=True)
+    rating_list_dislike = sorted(rating_list_dislike, key=(lambda x: x[1]), reverse=True)
 
-    rating_dict = {}
+    stall_want_to_rt = {}
+    stall_want_to_rm = {}
     for i in range(remove_num):
-        rating_dict[rating_list[i][0]] = rating_list[i][1]
-
-    # 最喜欢的dic
-    number2 = df.iloc[:, 3].tolist()
-    index2 = [i for i in range(1, len(bys)+1)]
-    for i in range(len(index)):
-        like_list.append([index2[i], number2[i]])
-    like_list = sorted(like_list, key=(lambda x: x[1]), reverse=True)
-
-    like_dict = {}
-    for i in range(remove_num):
-        like_dict[like_list[i][0]] = like_list[i][1]
-    # print(like_dict)
+        stall_want_to_rm[rating_list_dislike[i][0]] = rating_list_dislike[i][1]
+    for i in range(3*remove_num):
+        stall_want_to_rt[rating_list_like[i][0]] = rating_list_like[i][1]
+    # print(stall_want_to_rt)
+    # print(stall_want_to_rm)
+    
     all_results = []
     evaluation = 0
     removes = []
@@ -138,11 +128,11 @@ def borda(remove_percent, lists):
                     for t in range(remove_num):
                         # mark the removed stalls
                         removes.append(pairs[t][0])
-                        # calculate the cost
-                        if pairs[t][0] in rating_dict:
-                            evaluation += rating_dict[pairs[t][0]]
-                        if pairs[t][0] in like_dict:
-                            evaluation -= like_dict[pairs[t][0]]
+                        # calculate the cost lower the better
+                        if pairs[t][0] in stall_want_to_rm:
+                            evaluation -= 1
+                        if pairs[t][0] in stall_want_to_rt:
+                            evaluation += 2
                     # 记录下每一次
                     all_results.append(
                         [w1, w2, w3, w4, w5, evaluation, removes])
@@ -152,8 +142,9 @@ def borda(remove_percent, lists):
                     removes = []
 
     all_results = sorted(
-        all_results, key=(lambda x: x[5]), reverse=True)
-    print(all_results[0])
+        all_results, key=(lambda x: x[5]), reverse=False)
+    # 输出最后一个，evaluation最大的结果的比重
+    # print(all_results[0])
     return all_results[0]
 
 
@@ -179,5 +170,5 @@ if __name__ == "__main__":
     # nlp = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     # page_sim = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     # page_pos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    # borda(bys, r, nlp, page_sim, page_pos)
-    print(infer([bys, r, nlp, page_sim, page_pos], [100, 0, 0, 0, 0], 4))
+    borda(0.1, [bys, r, nlp, page_sim, page_pos])
+    # print(infer([bys, r, nlp, page_sim, page_pos], [100, 0, 0, 0, 0], 4))
