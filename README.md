@@ -1,6 +1,14 @@
-# How to run our code
+# An investigation into the school canteen evaluation and reform
 
-## Input requirement
+## Logistics
+
+Meals are essential to a student’s campus life, and having a well-evaluated canteen system is a vital aspect of school infrastructure. CUHKSZ has undergone several canteen reform programs, but students’ satisfaction with the cafeteria remains low despite these efforts. Complaints about the canteen are frequent, and many students prefer to eat the off-campus meal. As students of CUHKSZ, we recognize the importance of providing an effective evaluation system to guide future canteen reform programs.
+To address this issue, we propose a new evaluation system that collects and analyzes students’ evaluations of each stall in the cafeteria. We then apply the collected data to a new evaluation model that combines Bayesian ranking, modified page ranking, and Borda count to create a more reasonable canteen improvement strategy. We aim to enhance the overall student experience by involving them in evaluating and reforming the canteen.
+In this project, we will discuss the details of our proposed evaluation system and how it can create a more student-centric canteen. This new evaluation model will provide a comprehensive understanding of the student’s needs and expectations for the cafeteria, leading to more effective canteen reform programs.
+
+## How to run our code
+
+### Input requirement
 
 The whole program is a model for ranking the stalls in all canteen. The students' ratings for each stall, the complaints each stall received, the distance between stalls, the similarity, and the revenue of stalls are all consider in this model and the corresponding rankings are packaged in separate files. Users just need to fill in all of the Excel files in the 'data' folder before running the program. 
 
@@ -20,9 +28,9 @@ If the user gets more data about the stalls that students hope to remove and wan
 
 ![image.png](imgs/image3.png)
 
-## Complaint analysis
+### Complaint analysis
 
-## Setting parameters and getting the result!
+### Setting parameters and getting the result!
 
 There are three parameters that the user needs to set. The first one is remove_percentage. This is telling the program how many stalls you want to remove. For example, if the total amount of stalls is 100 and the user wants to remove 10 stalls, he/she can set this parameter to 0.1. The second parameter is called calculate. This parameter is to tell the program whether it needs to retrain the model and return a new group of weights that minimize the cost. The third parameter is whether to return the evaluation result of the current group of weights. 
 
