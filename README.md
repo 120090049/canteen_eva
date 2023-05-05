@@ -10,15 +10,15 @@ The first Excel is complaint.xlsx. The first column is the canteen's name and th
 
 The second Excel is stall_canteen_campus.xlsx. It stores the information of each stall and its position (i.e. in upper campus or lower campus). The first column is the canteen's name and the second one is the stall's name. The last one is the corresponding campus. Here is an example:
 
-![image.png](imgs/image 1.png)
+![image.png](imgs/image1.png)
 
 The third Excel is stall_rating.xlsx. It stores the rating of each stall given by students. The first column is the canteen's name and the second one is the stall's name. The third one is the number of people who rate this stall. The last one is the corresponding rating. Here is an example:
 
-![image.png](imgs/image 2.png)
+![image.png](imgs/image2.png)
 
 If the user gets more data about the stalls that students hope to remove and want to retrain the model, they need to first update the stall_want_to_remove.xlsx and then run the program again. The Excel file is shown here. The first column is the canteen's name and the second one is the stall's name. The third one is the number of people who dislike this stall. 
 
-![image.png](imgs/image 3.png)
+![image.png](imgs/image3.png)
 
 ## Complaint analysis
 
@@ -30,5 +30,5 @@ There are three parameters that the user needs to set. The first one is remove_p
 
 After setting the program, the user can run the program by "python main.py" and get the stalls to be removed. The outputs are the indexes of the stalls that need to be removed:
 
-![image.png](imgs/image 4.png)
+![image.png](imgs/image4.png)
 
