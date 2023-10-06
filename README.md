@@ -5,6 +5,7 @@
 Meals are essential to a student’s campus life, and having a well-evaluated canteen system is a vital aspect of school infrastructure. CUHKSZ has undergone several canteen reform programs, but students’ satisfaction with the cafeteria remains low despite these efforts. Complaints about the canteen are frequent, and many students prefer to eat the off-campus meal. As students of CUHKSZ, we recognize the importance of providing an effective evaluation system to guide future canteen reform programs.
 To address this issue, we propose a new evaluation system that collects and analyzes students’ evaluations of each stall in the cafeteria. We then apply the collected data to a new evaluation model that combines Bayesian ranking, modified page ranking, and Borda count to create a more reasonable canteen improvement strategy. We aim to enhance the overall student experience by involving them in evaluating and reforming the canteen.
 In this project, we will discuss the details of our proposed evaluation system and how it can create a more student-centric canteen. This new evaluation model will provide a comprehensive understanding of the student’s needs and expectations for the cafeteria, leading to more effective canteen reform programs.
+The detailed report is as ![follows](https://github.com/120090049/canteen_eva/blob/main/Project%20Interim%20Report_An_investigation_into_the_school_canteen_evaluation_and_reform.pdf)
 
 ## How to run our code
 
